@@ -1,4 +1,7 @@
 import random
+import json
+import ast
+
 
 file = open("data.txt", "r+")
 values = file.read().split(",")
@@ -8,6 +11,19 @@ pomsMultiplier = float(values[8])
 diffMultiplier = float(values[9])
 medMultiplier = float(values[10])
 easyMultiplier = float(values[11])
+
+def first():
+    choice = input("Would you like to enter tasks {1} or go to spends {2} or would you like to just see values {3}?\n")
+    choice = int(choice)
+    if(choice == 1 ):
+        inputs()
+        fullView()
+    if(choice == 2):
+        spend()
+        fullView()
+    else:
+        fullView()
+
 def inputs():
     dif = int(input("Please enter the number of difficult complexity tasks you have completed\n"))
     me = int(input("Please enter the number of medium complexity tasks you have completed\n"))
@@ -54,9 +70,62 @@ def write(diff, med, easy, rems, poms, total):
         values[8] = (values[8]* value /0.1)+ values[8]
 
 
-    print("You have earned: ", values[3], "gold\n")
+    fullView()
+    finalPrint()
+
+def spend():
+    spendFile = open("spends.txt","r")
+    spends = spendFile.read()
+    spends = ast.literal_eval(spends)
+    response = input("Do you want to spend {1} or do you want to add new spends {2}?\n")
+    if (int(response) == 1):
+        for item in spends:
+            print(item, "costs", spends[item])
+        amount = input("How much are you spending?\n")
+        amount = int(amount)
+        prize = ""
+        if(amount <= values[5]):
+            values[5] -= amount;
+            for key, value in spends.items():
+                if amount == value:
+                    prize = key
+            print("You just bought: ", prize, "Enjoy!\n")
+        else:
+            print("Sorry, insufficient funds")
+    if(int(response) == 2):
+        spendFile = open("spends.txt","w")
+        repeats = input("How many spends are you adding?\n")
+        repeats = int(repeats)
+        for x in range(repeats):
+            name = input("What is the name?\n")
+            cost = input("What is the cost?\n")
+            cost = int(cost)
+            spends[name]=cost
+        spendFile.write(str(spends))
+    finalPrint()
+
+def finalPrint():
     file.close()
     fileNew = open("data.txt", "w")
     for value in values:
         fileNew.write(str(value)+",")
-inputs()
+
+def fullView():
+    print("Your current gold balance is: ",values[5],"\n")
+    print("You've completed", values[0],"hard tasks\n")
+    print("You've completed", values[1],"medium tasks\n")
+    print("You've completed", values[2],"easy tasks\n")
+    print("You've completed", values[3],"reminders\n")
+    print("You've completed", values[4],"pomodoros\n")
+    print("Your current maxMultiplier is", values[6],"\n")
+    print("Your current remsMultiplier is", values[7],"\n")
+    print("Your current pomsMultiplier is", values[8],"\n")
+    print("Your current diffMultiplier is", values[9],"\n")
+    print("Your current medMultiplier is", values[10],"\n")
+    print("Your current easyMultiplier is", values[11],"\n")
+
+
+
+
+
+first()
