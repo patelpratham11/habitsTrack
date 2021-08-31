@@ -1,0 +1,12 @@
+take in user input for number of tasks done
+take in user input for number of pomodoros completed
+generate a random number between 0.1 and 0.5
+do calculations in order to add points to point bank
+addition of points to bank will allow for things to be "bought"
+
+
+Additional Implementations (in order):
+  1. take in a difficulty score for each assignment
+  2. take in a date value to build consistency
+  3. add habits along with tasks
+  4. implement gui
