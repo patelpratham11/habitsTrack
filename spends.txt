@@ -1,1 +1,1 @@
-{'Movie': 25, 'Episode': 5, 'Eat Out': 30, 'Snack': 3}
+{'Movie': 15, 'Spend $1': 15, 'Episode': 3, 'Eat Out': 10, 'Relax': 20}

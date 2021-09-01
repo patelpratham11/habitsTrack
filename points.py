@@ -32,7 +32,7 @@ def first():
         fullView()
     if(choice == 4):
         gold()
-        print("Thank you for using this service!")
+        print("Thank you for using this service!\n\n")
 
 #taking in inputs and then updating gold based on multipliers
 def inputs():
@@ -60,6 +60,7 @@ def write(diff, med, easy, rems, poms, total):
     values[3] = int(int(values[3])+rems)
     values[4] = int(int(values[4])+poms)
     values[5] = int(int(values[5])+total)
+    values[6] = float(values[6])
     values[7] = float(values[7])
     values[8] = float(values[8])
     values[9] = float(values[9])
@@ -97,27 +98,43 @@ def spend():
     if (int(response) == 1):
         for item in spends:
             print(item, "costs", spends[item])
-        amount = input("How much are you spending?\n")
-        amount = int(amount)
-        prize = ""
-        if(amount <= float(values[5])):
-            values[5] -= amount;
-            for key, value in spends.items():
-                if amount == value:
-                    prize = key
-            print("You just bought:", prize, "Enjoy!\n")
-        else:
-            print("Sorry, insufficient funds")
+        msg = "How much are you spending?\nRemember, your current gold balance is: "+str(values[5])+"\n"
+        amount = input(msg)
+        if(amount.find(",") != -1):
+            amount = amount.split(",")
+        for item in amount:
+            item = int(item)
+            prize = ""
+            if(item <= float(values[5])):
+                values[5] = int(values[5])
+                values[5] -= item
+                for key, value in spends.items():
+                    if item == value:
+                        prize = key
+                print("You just bought:", prize, "Enjoy!\n")
+            else:
+                print("Sorry, insufficient funds")
     if(int(response) == 2):
         spendFile = open("spends.txt","w")
-        repeats = input("How many spends are you adding?\n")
-        repeats = int(repeats)
-        for x in range(repeats):
-            name = input("What is the name?\n")
-            cost = input("What is the cost?\n")
-            cost = int(cost)
-            spends[name]=cost
-        spendFile.write(str(spends))
+        responseTwo = int(input("Are you editing? Yes {1} or No {2}\n"))
+        if(responseTwo == 1):
+            for item in spends:
+                print(item, "costs", spends[item])
+            edit = input("Which item are you editing? (Just enter the name as shown above)\n")
+            newValue = int(input("Enter the new price\n"))
+            spends[edit] = newValue
+            print("Changed Successfully!\n")
+            for item in spends:
+                print(item, "costs", spends[item])
+        if (responseTwo == 2):
+            repeats = input("How many spends are you adding?\n")
+            repeats = int(repeats)
+            for x in range(repeats):
+                name = input("What is the name?\n")
+                cost = input("What is the cost?\n")
+                cost = int(cost)
+                spends[name]=cost
+            spendFile.write(str(spends))
     finalPrint()
 
 #adding everything to the document
