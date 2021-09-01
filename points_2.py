@@ -3,11 +3,9 @@ import json
 import ast
 import time
 
-#setting up global variables
-#reading file
+
 file = open("data.txt", "r+")
 values = file.read().split(",")
-#setting up global variables/ multipliers
 maxMultiplier = float(values[6])
 remsMultiplier = float(values[7])
 pomsMultiplier = float(values[8])
@@ -15,26 +13,25 @@ diffMultiplier = float(values[9])
 medMultiplier = float(values[10])
 easyMultiplier = float(values[11])
 
-#first executed method
 def first():
     choice = input("Would you like to enter tasks {1} or go to spends {2} or would you like to just see values {3}?\nExit == 4\n")
     choice = int(choice)
     if(choice == 1 ):
         inputs()
         time.sleep(2)
-        gold()
+        fullView()
     if(choice == 2):
         spend()
         time.sleep(2)
-        first()
+        gold()
+    if(choice == 4):
+        fullView()
+        print("Thank you for using this service!")
     if(choice == 3):
         time.sleep(2)
         fullView()
-    if(choice == 4):
-        gold()
-        print("Thank you for using this service!")
 
-#taking in inputs and then updating gold based on multipliers
+
 def inputs():
     dif = int(input("Please enter the number of difficult complexity tasks you have completed\n"))
     me = int(input("Please enter the number of medium complexity tasks you have completed\n"))
@@ -51,7 +48,6 @@ def inputs():
     total = int(total*multiplier+(total/2))
     write(diff, med, easy, rems, poms, total)
 
-#changing all values then writing them to a file
 def write(diff, med, easy, rems, poms, total):
     values.pop()
     values[0] = int(int(values[0])+diff)
@@ -65,9 +61,6 @@ def write(diff, med, easy, rems, poms, total):
     values[9] = float(values[9])
     values[10] = float(values[10])
     values[11] = float(values[11])
-    if(int(int(values[5])/5) != 0):
-        value = float(values[5]/5)
-        values[6] = round((values[6]* value /10)+ values[6],4)
     if(int(int(values[0])/5) != 0):
         value = float(values[0]/5)
         values[9] = round((values[9]* value /10)+ values[9],4)
@@ -88,7 +81,6 @@ def write(diff, med, easy, rems, poms, total):
     fullView()
     finalPrint()
 
-#spendings list; adding or spending
 def spend():
     spendFile = open("spends.txt","r")
     spends = spendFile.read()
@@ -105,7 +97,7 @@ def spend():
             for key, value in spends.items():
                 if amount == value:
                     prize = key
-            print("You just bought:", prize, "Enjoy!\n")
+            print("You just bought: ", prize, "Enjoy!\n")
         else:
             print("Sorry, insufficient funds")
     if(int(response) == 2):
@@ -120,19 +112,16 @@ def spend():
         spendFile.write(str(spends))
     finalPrint()
 
-#adding everything to the document
 def finalPrint():
     file.close()
     fileNew = open("data.txt", "w")
     for value in values:
         fileNew.write(str(value)+",")
-#simple bank balance
 def gold():
     print("################################################\n")
     print("Your current gold balance is: ",values[5],"\n")
     print("################################################\n")
-
-#every single piece of information; gold; multipliers; streaks
+    
 def fullView():
     print("\n\n\n")
     print("################################################\n")
@@ -150,7 +139,7 @@ def fullView():
     print("Your current diffMultiplier is", values[9],"\n")
     print("Your current medMultiplier is", values[10],"\n")
     print("Your current easyMultiplier is", values[11],"\n")
-    print("################################################\n\n")
+    print("\n\n\n")
     time.sleep(2)
     first()
 
