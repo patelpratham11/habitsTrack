@@ -1,6 +1,7 @@
 import random
 import json
 import ast
+import time
 
 
 file = open("data.txt", "r+")
@@ -13,16 +14,23 @@ medMultiplier = float(values[10])
 easyMultiplier = float(values[11])
 
 def first():
-    choice = input("Would you like to enter tasks {1} or go to spends {2} or would you like to just see values {3}?\n")
+    choice = input("Would you like to enter tasks {1} or go to spends {2} or would you like to just see values {3}?\nExit == 4\n")
     choice = int(choice)
     if(choice == 1 ):
         inputs()
+        time.sleep(2)
         fullView()
     if(choice == 2):
         spend()
+        time.sleep(2)
+        gold()
+    if(choice == 4):
         fullView()
-    else:
+        print("Thank you for using this service!")
+    if(choice == 3):
+        time.sleep(2)
         fullView()
+
 
 def inputs():
     dif = int(input("Please enter the number of difficult complexity tasks you have completed\n"))
@@ -55,19 +63,19 @@ def write(diff, med, easy, rems, poms, total):
     values[11] = float(values[11])
     if(int(int(values[0])/5) != 0):
         value = float(values[0]/5)
-        values[9] = (values[9]* value /0.1)+ values[9]
+        values[9] = round((values[9]* value /10)+ values[9],4)
     if(int(int(values[1])/5) != 0):
         value = float(values[1]/5)
-        values[10] = (values[10]* value /0.1)+ values[10]
+        values[10] = round((values[10]* value /10)+ values[10],4)
     if(int(int(values[2])/5) != 0):
         value = float(values[2]/5)
-        values[11] = (values[11]* value /0.1)+ values[11]
+        values[11] = round((values[11]* value /10)+ values[11],4)
     if(int(int(values[3])/5) != 0):
         value = float(values[3]/5)
-        values[7] = (values[7]* value /0.1)+ values[7]
+        values[7] = round((values[7]* value /10)+ values[7],4)
     if(int(int(values[4])/5) != 0):
         value = float(values[4]/5)
-        values[8] = (values[8]* value /0.1)+ values[8]
+        values[8] = round((values[8]* value /10)+ values[8],4)
 
 
     fullView()
@@ -84,7 +92,7 @@ def spend():
         amount = input("How much are you spending?\n")
         amount = int(amount)
         prize = ""
-        if(amount <= values[5]):
+        if(amount <= float(values[5])):
             values[5] -= amount;
             for key, value in spends.items():
                 if amount == value:
@@ -109,23 +117,30 @@ def finalPrint():
     fileNew = open("data.txt", "w")
     for value in values:
         fileNew.write(str(value)+",")
-
-def fullView():
+def gold():
+    print("################################################\n")
     print("Your current gold balance is: ",values[5],"\n")
+    print("################################################\n")
+    
+def fullView():
+    print("\n\n\n")
+    print("################################################\n")
+    print("Your current gold balance is: ",values[5],"\n")
+    print("################################################\n")
     print("You've completed", values[0],"hard tasks\n")
     print("You've completed", values[1],"medium tasks\n")
     print("You've completed", values[2],"easy tasks\n")
     print("You've completed", values[3],"reminders\n")
     print("You've completed", values[4],"pomodoros\n")
+    print("################################################\n")
     print("Your current maxMultiplier is", values[6],"\n")
     print("Your current remsMultiplier is", values[7],"\n")
     print("Your current pomsMultiplier is", values[8],"\n")
     print("Your current diffMultiplier is", values[9],"\n")
     print("Your current medMultiplier is", values[10],"\n")
     print("Your current easyMultiplier is", values[11],"\n")
-
-
-
-
+    print("\n\n\n")
+    time.sleep(2)
+    first()
 
 first()
