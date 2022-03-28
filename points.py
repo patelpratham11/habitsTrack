@@ -68,22 +68,22 @@ def write(diff, med, easy, rems, poms, total):
     values[11] = float(values[11])
     if(int(int(values[5])/5) != 0):
         value = float(values[5]/5)
-        values[6] = round((values[6]* value /10)+ values[6],4)
+        values[6] = round((values[6]* value /3700)+ values[6],4)
     if(int(int(values[0])/5) != 0):
         value = float(values[0]/5)
-        values[9] = round((values[9]* value /10)+ values[9],4)
+        values[9] = round((values[9]* value /3700)+ values[9],4)
     if(int(int(values[1])/5) != 0):
         value = float(values[1]/5)
-        values[10] = round((values[10]* value /10)+ values[10],4)
+        values[10] = round((values[10]* value /3700)+ values[10],4)
     if(int(int(values[2])/5) != 0):
         value = float(values[2]/5)
-        values[11] = round((values[11]* value /10)+ values[11],4)
+        values[11] = round((values[11]* value /3700)+ values[11],4)
     if(int(int(values[3])/5) != 0):
         value = float(values[3]/5)
-        values[7] = round((values[7]* value /10)+ values[7],4)
+        values[7] = round((values[7]* value /3700)+ values[7],4)
     if(int(int(values[4])/5) != 0):
         value = float(values[4]/5)
-        values[8] = round((values[8]* value /10)+ values[8],4)
+        values[8] = round((values[8]* value /3700)+ values[8],4)
 
 
     fullView()
