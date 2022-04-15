@@ -6,14 +6,18 @@
 ## Usage
   - Clone the repository in whichever location you want to keep it
     - `git clone https://github.com/patelpratham11/habitsTrack.git`
-  - Initialize the *data.txt* file to be the following values
-    - `1,1,1,1,1,1,0.05,0.05,0.05,0.05,0.05,0.05,,,,,`
-  - Initialize the *boss.txt* file to be the following values
-    - `name, health of boss, reward for defeating`
-  - Initialize the *spends.txt* file following the given format or you can leave it blank
-    - `{'Movie': 15, 'TV Show Episode': 10, 'Junk Food': 5}`
-  - Initialize the *player.txt* file to be the following values
-    - `name,0,0,0.0001,0`
+  - Initialize...
+    - *data.txt* file to be the following values
+      - `1,1,1,1,1,1,0.05,0.05,0.05,0.05,0.05,0.05,,,,,`
+    - *boss.txt* file to be the following values
+      - `name, health of boss, reward for defeating`
+    - *spends.txt* file following the given format or you can leave it blank
+      - `{'Movie': 15, 'TV Show Episode': 10, 'Junk Food': 5}`
+    - *player.txt* file to be the following values
+      - `name,0,0,0.0001,0`
+    - Setup/Download the following modules in the directory
+      - `random`
+      - `ast`
   - Run the file and follow the prompts from your command line
     - `python3 habits.py`
 
