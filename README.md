@@ -7,8 +7,9 @@
   - Clone the repository in whichever location you want to keep it
     - `git clone https://github.com/patelpratham11/habitsTrack.git`
   - Initialize the *data.txt* file to be the following values
-    - `0,0,0,0,0,0,`
+    - `1,1,1,1,1,1,0.05,0.05,0.05,0.05,0.05,0.05,,,,,`
   - Initialize the spends file following the given format or you can leave it blank
+    - `{'Movie': 15, 'TV Show Episode': 10, 'Junk Food': 5}` 
   - Run the file and follow the prompts from your command line
     - `python3 points.py`
 

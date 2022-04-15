@@ -1,3 +1,0 @@
-1. Looping issue
-2. Multiple spends?
-3. Edit spends?

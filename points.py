@@ -2,6 +2,7 @@ import random
 import json
 import ast
 import time
+import sys
 
 #setting up global variables
 #reading file
@@ -17,30 +18,38 @@ easyMultiplier = float(values[11])
 
 #first executed method
 def first():
-    choice = input("Would you like to enter tasks {1} or go to spends {2} or would you like to just see values {3}?\nExit == 4\n")
+    # choice = input("Would you like to enter tasks {1} or go to spends {2} or would you like to just see values {3}?\nExit == 4\n")
+    print("\033[1;32m What would you like to do?\033[0m")
+    choice = input("\n\tEnter Tasks: \t1\n\tGo to Spends: \t2\n\tSee Values: \t3\n\tExit: \t4\n\n")
+    print("\033c", end="")
     choice = int(choice)
     if(choice == 1 ):
         inputs()
-        time.sleep(2)
         gold()
-    if(choice == 2):
+    elif(choice == 2):
         spend()
-        time.sleep(2)
         first()
-    if(choice == 3):
-        time.sleep(2)
+    elif(choice == 3):
         fullView()
-    if(choice == 4):
+    elif(choice == 4):
         gold()
-        print("Thank you for using this service!\n\n")
+        print("\n")
+        print("\033[1;35m /***************************************************/\n")
+        print("\tThank you for using this service!\n")
+        print("/***************************************************/\033[0m\n")
+        sys.exit()
+    else:
+        print("INVALID CHOICE, EXITING PROGRAM") #change color
+        sys.exit()
 
 #taking in inputs and then updating gold based on multipliers
 def inputs():
-    dif = int(input("Please enter the number of difficult complexity tasks you have completed\n"))
-    me = int(input("Please enter the number of medium complexity tasks you have completed\n"))
-    eas = int(input("Please enter the number of low complexity tasks you have completed\n"))
-    rem = int(input("Please enter the number of reminders you have completed\n"))
-    pom = int(input("Please enter the number of pomodoros you have completed\n"))
+    dif = int(input("\033[0;36mPlease enter the number of difficult complexity tasks you have completed\n\t"))
+    me = int(input("Please enter the number of medium complexity tasks you have completed\n\t"))
+    eas = int(input("Please enter the number of low complexity tasks you have completed\n\t"))
+    rem = int(input("Please enter the number of reminders you have completed\n\t"))
+    pom = int(input("Please enter the number of pomodoros you have completed\n\t"))
+    print("\033[0;0m \033c", end="")
     diff = dif * float(diffMultiplier) + dif
     med = me * float(medMultiplier)+ me
     easy = eas * float(easyMultiplier)+ eas
@@ -94,14 +103,18 @@ def spend():
     spendFile = open("spends.txt","r")
     spends = spendFile.read()
     spends = ast.literal_eval(spends)
-    response = input("Do you want to spend {1} or do you want to add new spends {2}?\n")
+    response = input("\033[1;32mWhat would you like to do?\033[1;0m\n\tSpend Gold? \t{1}\n\tAdd New Spends? \t{2}?\n")
+    print("\033c", end="")
     if (int(response) == 1):
         for item in spends:
-            print(item, "costs", spends[item])
-        msg = "How much are you spending?\nRemember, your current gold balance is: "+str(values[5])+"\n"
+            print(item, "costs \033[3m\033[1;31m", spends[item], "\033[0m\n")
+        msg = "\nHow much are you spending?\nRemember, your current gold balance is: \033[5m\033[1;33m"+str(values[5])+"\033[0m\n"
         amount = input(msg)
+        print("\033c", end="")
+
         if(amount.find(",") != -1):
             amount = amount.split(",")
+
         for item in amount:
             item = int(item)
             prize = ""
@@ -111,12 +124,15 @@ def spend():
                 for key, value in spends.items():
                     if item == value:
                         prize = key
-                print("You just bought:", prize, "Enjoy!\n")
+                        print("You just bought: \033[5m\033[1;33m", prize, "\033[0m\nEnjoy!\n")
+                else:
+                    print("Transaction complete but item not found. Please edit datafile if invalid Transaction.\n")
             else:
-                print("Sorry, insufficient funds")
+                print("\033[5m\033[1;33mSorry, insufficient funds\033[0m")
     if(int(response) == 2):
         spendFile = open("spends.txt","w")
-        responseTwo = int(input("Are you editing? Yes {1} or No {2}\n"))
+        responseTwo = int(input("Are you editing?\n\t\033[1;32mYes \t{1}\033[0m\033[1;31m\n\tNo \t{2}\033[0m\n"))
+        print("\033c", end="")
         if(responseTwo == 1):
             for item in spends:
                 print(item, "costs", spends[item])
@@ -124,6 +140,7 @@ def spend():
             newValue = int(input("Enter the new price\n"))
             spends[edit] = newValue
             print("Changed Successfully!\n")
+            print("\033c", end="")
             for item in spends:
                 print(item, "costs", spends[item])
         if (responseTwo == 2):
@@ -135,6 +152,7 @@ def spend():
                 cost = int(cost)
                 spends[name]=cost
             spendFile.write(str(spends))
+    print("\033c", end="")
     finalPrint()
 
 #adding everything to the document
@@ -145,30 +163,28 @@ def finalPrint():
         fileNew.write(str(value)+",")
 #simple bank balance
 def gold():
-    print("################################################\n")
-    print("Your current gold balance is: ",values[5],"\n")
-    print("################################################\n")
+    print("\033[1;35m/***************************************************/\033[0m\n")
+    print("\033[1;33m\tYour current gold balance is: ",values[5],"\n")
+    print("\033[1;35m/***************************************************/\033[0m\n")
 
 #every single piece of information; gold; multipliers; streaks
 def fullView():
-    print("\n\n\n")
-    print("################################################\n")
-    print("Your current gold balance is: ",values[5],"\n")
-    print("################################################\n")
-    print("You've completed", values[0],"hard tasks\n")
-    print("You've completed", values[1],"medium tasks\n")
-    print("You've completed", values[2],"easy tasks\n")
-    print("You've completed", values[3],"reminders\n")
-    print("You've completed", values[4],"pomodoros\n")
-    print("################################################\n")
-    print("Your current maxMultiplier is", values[6],"\n")
-    print("Your current remsMultiplier is", values[7],"\n")
-    print("Your current pomsMultiplier is", values[8],"\n")
-    print("Your current diffMultiplier is", values[9],"\n")
-    print("Your current medMultiplier is", values[10],"\n")
-    print("Your current easyMultiplier is", values[11],"\n")
-    print("################################################\n\n")
-    time.sleep(2)
+    print("\033[1;35m/***************************************************/\033[0m\n")
+    print("\033[0;32m\tYou've completed", values[0],"hard tasks\n")
+    print("\tYou've completed", values[1],"medium tasks\n")
+    print("\tYou've completed", values[2],"easy tasks\n")
+    print("\tYou've completed", values[3],"reminders\n")
+    print("\tYou've completed", values[4],"pomodoros\n")
+    print("\033[1;35m/***************************************************/\033[0m\n")
+    print("\033[1;35m/***************************************************/\033[0m\n")
+    print("\033[0;36m\tYour current maxMultiplier is", values[6],"\n")
+    print("\tYour current remsMultiplier is", values[7],"\n")
+    print("\tYour current pomsMultiplier is", values[8],"\n")
+    print("\tYour current diffMultiplier is", values[9],"\n")
+    print("\tYour current medMultiplier is", values[10],"\n")
+    print("\tYour current easyMultiplier is", values[11],"\n")
+    print("\033[1;35m/***************************************************/\033[0m\n")
+    gold()
     first()
 
 first()

@@ -1,1 +1,1 @@
-{'Movie': 15, 'Spend $1': 7, 'Episode': 10, 'Relax': 20, 'Candy': 1, 'Soda':2}
+{'movie': 10, 'episode': 5, '3-buy new candy': 25, '4-youtube video': 7, '5-junk': 5}
