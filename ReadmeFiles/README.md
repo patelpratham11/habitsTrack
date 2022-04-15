@@ -18,6 +18,7 @@
     - Setup/Download the following modules in the directory
       - `random`
       - `ast`
+      - **Alternatively, you can copy the HabitsTrack folder and just use that venv**
   - Run the file and follow the prompts from your command line
     - `python3 habits.py`
 
