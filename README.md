@@ -26,7 +26,7 @@
   - Every time you complete a task of varying difficulty, your multipliers will come in and add gold to your balance based on the difficulty
   - You also deal a certain amount of damage to the boss based on your `strength`
   - As you level up, your `strength` goes up
-  - After you defeat the boss, your balance goes up
+  - After you defeat the boss, your `balance` goes up
 
 ## Change Log
   - Added custom colors to terminal print-outs
