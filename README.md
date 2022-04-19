@@ -23,7 +23,7 @@
     - `python3 habits.py`
 
 ## Video Demonstration
-  <video src='./HabitsTrack.mp5' width=180/>
+  video src='./HabitsTrack.mp5' width=180/
 ## Explanations
   - We read/write data to multiple files
     - *data.txt* -> houses the data and multiplier values
@@ -41,5 +41,10 @@
   - Better selection and edit functions for spends
   - Improved overall format and tabs of the program
 
+## Potential Future Features
+  - Adding a `reminders` feature that allows you to earn gold as you continue a streak
+    - Breaking the streak results in a `looting`, reducing your `balance` by some random value less than 25% of your stockpile
+  - Adding a  `negatives` feature, where checking it off will mean you're going to lose some `gold` or `health` or increases `bosshealth`
+  - Addition of a `shop` that allows you to buy items that increase `strength`, `multipliers`,  `instant health potions`, or `instant damage potions`
 ## Acknowledgements
   - This project was created by Pratham Patel, all bugs can be submitted via github
