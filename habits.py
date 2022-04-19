@@ -158,6 +158,7 @@ def inputs():
 
 
 
+    print("You just earned: ",round(totalGold,0)," gold!")
     checkLevel()
     bossUpdate(totalGold)
     writeValues()
@@ -172,7 +173,7 @@ def checkLevel():
     global easyMultiplier
     global strength
 
-    tempLevel = experience / 25
+    tempLevel = experience / 45
     if(tempLevel > level):
         print("WOW! You have leveled up! Now you're level: ",int(tempLevel),"\n")
         level = int(tempLevel)
@@ -182,12 +183,13 @@ def checkLevel():
         easyMultiplier += (multiplierIncrease/3)
         remsMultiplier += (multiplierIncrease/4)
         pomsMultiplier += (multiplierIncrease/4)
-        strength += (multiplierIncrease/2)
+        strength += (multiplierIncrease)
+        writeValues()
 
 def bossValues():
     print("You're currently fighting: \033[0;31m",bossName,"\033[0m \n")
     print("The boss is currently at: \033[5m\033[1;31m",round(health,3),"\033[0m health.")
-    print("There is a bounty of: \033[1;33m",reward,"\033[0m on the boss' head")
+    print("There is a bounty of: \033[1;33m",round(reward,0),"\033[0m on the boss' head")
 
 def bossUpdate(totalToday):
     global health
@@ -195,8 +197,8 @@ def bossUpdate(totalToday):
     global reward
     global balance
 
-    health -= (strength * float(totalToday/3))
-    print("You just did ",round(strength * totalToday/3, 3)," damage to ",bossName)
+    health -= (strength * float(totalToday/3) + strength)
+    print("You just did ",round(strength * float(totalToday/3) + strength, 3)," damage to ",bossName)
     if(health <= 0):
         print("\033[42myou have defeated the boss,",bossName,"!")
         balance += reward
@@ -233,12 +235,12 @@ def spendGold():
             if(item == key[0]):
                 contains = True
                 if(cost <= balance):
-                    print("You just bought: \033[5m\033[1;33m", item, "\033[0m\nEnjoy!\n")
+                    val = key.partition("-")[2]
+                    print("You just bought: \033[5m\033[1;33m", val, "\033[0m\nEnjoy!\n")
                     balance -= cost
                 else:
                     print("\033[5m\033[1;33mSorry, insufficient funds\033[0m")
-    # if (contains == False):
-    #     print("ERROR")
+    writeValues()
 
 def changeSpends():
     spendFile = open("spends.txt","r+")
@@ -279,14 +281,18 @@ def balancePrint():
 def fullPrint():
     balancePrint()
     print("\033[1;35m/***************************************************/\033[0m\n")
-    print("\033[0;32m\tYou've completed", hardTasks,"hard tasks\n")
+    print("\033[0;32m\t",name, "your strength currently is: ",round(strength),"\n")
+    print("\tYou are currently Level: ", round(level),"\n")
+    print("\tBoss,",bossName," is at health: ",round(health, 3),"HP\n")
+    print("\tYour experience is: ", round(experience,3),"XP\n")
+    print("\033[1;35m/***************************************************/\033[0m\n")
+    print("\033[1;35m/***************************************************/\033[0m\n")
+    print("\033[0;36m\tYour current maxMultiplier is", maxMultiplier,"\n")
+    print("\tYou've completed", hardTasks,"hard tasks\n")
     print("\tYou've completed", mediumTasks,"medium tasks\n")
     print("\tYou've completed", easyTasks,"easy tasks\n")
     print("\tYou've completed", reminders,"reminders\n")
     print("\tYou've completed", pomodoros,"pomodoros\n")
-    print("\033[1;35m/***************************************************/\033[0m\n")
-    print("\033[1;35m/***************************************************/\033[0m\n")
-    print("\033[0;36m\tYour current maxMultiplier is", maxMultiplier,"\n")
     print("\tYour current remsMultiplier is", remsMultiplier,"\n")
     print("\tYour current pomsMultiplier is", pomsMultiplier,"\n")
     print("\tYour current diffMultiplier is", diffMultiplier,"\n")
