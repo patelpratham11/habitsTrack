@@ -1,0 +1,7 @@
+Item Name,Cost,Strength-Type,+Strength or -Health
+Sun Rapier,250,true,7
+Instant Damage Potion,150,false,15
+Silver Spikes,100,true,4
+Witch Spell,300,false,25
+Enchanted Quiver,75,true,2
+Lightining Bolt,50,false,10

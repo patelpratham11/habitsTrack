@@ -3,6 +3,7 @@ import json
 import ast
 import time
 import sys
+import pandas
 
 #global values
 
@@ -53,7 +54,7 @@ def openValues():
     global name
     global experience
     global level
-    global strengt
+    global strength
     global balance
     global bossName
     global health
@@ -95,7 +96,7 @@ def homeScreen():
     openValues()
     # choice = input("Would you like to enter tasks {1} or go to spends {2} or would you like to just see values {3}?\nExit == 4\n")
     print("\033[1;32m What would you like to do?\033[0m")
-    choice = input("\n\tEnter Tasks: \t1\n\tGo to Spends: \t2\n\tSee Values: \t3\n\tBoss Values: \t4\n\tExit: \t5\n\n")
+    choice = input("\n\tEnter Tasks: \t1\n\tGo to Spends: \t2\n\tSee Values: \t3\n\tBoss Values: \t4\n\tShop: \t5\n\tExit: \t6\n\n")
     print("\033c", end="")
     choice = int(choice)
     if(choice == 1 ):
@@ -111,6 +112,9 @@ def homeScreen():
         bossValues()
         homeScreen()
     elif(choice == 5):
+        shop()
+        homeScreen()
+    elif(choice == 6):
         balancePrint()
         print("\n")
         print("\033[1;35m /***************************************************/\n")
@@ -162,6 +166,7 @@ def inputs():
     checkLevel()
     bossUpdate(totalGold)
     writeValues()
+    openValues()
 
 def checkLevel():
     global level
@@ -173,18 +178,19 @@ def checkLevel():
     global easyMultiplier
     global strength
 
-    tempLevel = experience / 45
+    tempLevel = experience / (25*level)
     if(tempLevel > level):
         print("WOW! You have leveled up! Now you're level: ",int(tempLevel),"\n")
         level = int(tempLevel)
         multiplierIncrease = random.random()
         diffMultiplier += multiplierIncrease
-        medMultiplier += (multiplierIncrease/2)
-        easyMultiplier += (multiplierIncrease/3)
-        remsMultiplier += (multiplierIncrease/4)
-        pomsMultiplier += (multiplierIncrease/4)
+        medMultiplier += (multiplierIncrease/20)
+        easyMultiplier += (multiplierIncrease/30)
+        remsMultiplier += (multiplierIncrease/40)
+        pomsMultiplier += (multiplierIncrease/40)
         strength += (multiplierIncrease)
-        writeValues()
+    writeValues()
+    openValues()
 
 def bossValues():
     print("You're currently fighting: \033[0;31m",bossName,"\033[0m \n")
@@ -193,11 +199,10 @@ def bossValues():
 
 def bossUpdate(totalToday):
     global health
-    global strength
     global reward
     global balance
 
-    health -= (strength * float(totalToday/3) + strength)
+    health -= (strength * float(totalToday/(balance)))
     print("You just did ",round(strength * float(totalToday/3) + strength, 3)," damage to ",bossName)
     if(health <= 0):
         print("\033[42myou have defeated the boss,",bossName,"!")
@@ -241,6 +246,7 @@ def spendGold():
                 else:
                     print("\033[5m\033[1;33mSorry, insufficient funds\033[0m")
     writeValues()
+    openValues()
 
 def changeSpends():
     spendFile = open("spends.txt","r+")
@@ -273,12 +279,62 @@ def changeSpends():
     spendFile.truncate()  # Clear previous content
     spendFile.write(str(spends))
 
+def shop():
+    global health
+    global strength
+
+    fileVal = pandas.read_csv("shop.txt", sep=",", header=0, index_col=None)
+    print(fileVal)
+    number = input("Enter the Item Number that you would like to purchase")
+    if(int(number) > fileVal.shape[0]):
+        print("Invalid choice, returning now to Home screen")
+    else:
+        print("This is what you selected\n")
+        print(fileVal.iloc[[number]])
+        if(balanceValid(fileVal.iloc[int(number), 1])):
+            if(fileVal.iloc[int(number), 2]):
+                print("your strength has been increased by: ",fileVal.iloc[int(number), 3])
+                strength += int(fileVal.iloc[int(number), 3])
+                writeValues()
+                openValues()
+            else:
+                print("Boss has been damaged by: ",fileVal.iloc[int(number), 3])
+                health -= int(fileVal.iloc[int(number), 3])
+                writeValues()
+                openValues()
+                checkBoss()
+        else:
+            pass
+
+def checkBoss():
+    global balance
+
+    if(health <= 0):
+        print("\033[42myou have defeated the boss,",bossName,"!")
+        balance += reward
+        print("You have now recieved your reward\033[0m\n\nPlease update the boss.txt file")
+        balancePrint()
+
+def balanceValid(cost):
+    global balance
+    if(balance >= cost):
+        print("Transaction Successful\n")
+        balance -= cost
+        writeValues()
+        openValues()
+        return True
+    else:
+        print("insufficient Funds\n")
+        return False
+
 def balancePrint():
     print("\033[1;35m/***************************************************/\033[0m\n")
     print("\033[1;33m\tYour current gold balance is: ",int(balance),"\n")
     print("\033[1;35m/***************************************************/\033[0m\n")
 
 def fullPrint():
+    writeValues()
+    openValues()
     balancePrint()
     print("\033[1;35m/***************************************************/\033[0m\n")
     print("\033[0;32m\t",name, "your strength currently is: ",round(strength),"\n")
@@ -317,7 +373,7 @@ def writeValues():
     global name
     global experience
     global level
-    global strengt
+    global strength
     global balance
     global bossName
     global health
