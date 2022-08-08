@@ -1,7 +1,10 @@
 Item Name,Cost,Strength-Type,+Strength or -Health
-Sun Rapier,250,true,7
-Instant Damage Potion,150,false,15
-Silver Spikes,100,true,4
-Witch Spell,300,false,25
-Enchanted Quiver,75,true,2
-Lightining Bolt,50,false,10
+Sun Rapier,250,TRUE,1.5
+Electric Arrows,300,TRUE,2
+Silver Spikes,100,TRUE,0.75
+Enchanted Quiver,75,TRUE,0.5
+Lightining Bolt,50,FALSE,5
+Hand of God,600,FALSE,60
+Witch Spell,300,FALSE,30
+Instant Damage Potion,150,FALSE,15
+Bounty Hit,1200,FALSE,1000
