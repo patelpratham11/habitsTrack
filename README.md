@@ -1,4 +1,4 @@
-# HabitsTrack v2.0
+# HabitsTrack v2.1
   - A Habitica-themed command-line program that allows you to log activities and habits in exchange for 'gold'.
   - You can create custom spends along with their prices, and as you complete more tasks, your gold multipliers also increase.
 
