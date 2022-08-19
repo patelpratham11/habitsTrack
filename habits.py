@@ -108,6 +108,7 @@ class Habits():
             self.writeValues()
             sys.exit()
         else:
+            self.remindersView()
             print("INVALID CHOICE, EXITING PROGRAM") #change color
             self.writeValues()
             sys.exit()
@@ -317,6 +318,13 @@ class Habits():
         print("\033[1;33m|" + healthDisplay + remainingDisplay + "|")
         print("         " + percent + "\033[0m")
 
+    def remindersView(self):
+        remindersFile = open("reminders.txt","r")
+        reminder = remindersFile.read()
+        # reminder = ast.literal_eval(reminder)
+        for item in reminder:
+            print(item)
+
     def writeValues(self):
         dataFile = open("data.txt", "w")
         dataValues = [self.hardTasks,self.mediumTasks,self.easyTasks,self.reminders,self.pomodoros,self.remsMultiplier,self.pomsMultiplier,self.diffMultiplier,self.medMultiplier,self.easyMultiplier]
@@ -344,8 +352,6 @@ class Habits():
             string = str(element)+","
             bossFile.write(string)
         bossFile.close()
-
-
 
 
 Habits()
